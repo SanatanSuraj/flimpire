@@ -2,10 +2,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact"
-  ],
+  "eslint.validate": ["javascript", "javascriptreact"],
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "eslint.workingDirectories": [
     {
