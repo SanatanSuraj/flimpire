@@ -26,26 +26,25 @@ const NavBar = () => {
   useEffect(() => {
     const logInUser = async () => {
       if (token) {
-        if (sessionIdFromLocalStorage) {
-          console.log(1);
-          const { data: userData } = await moviesApi.get(
-            `/account?session_id=${sessionIdFromLocalStorage}`
-          );
+        try {
+          let sessionId = sessionIdFromLocalStorage;
 
-          dispatch(setUser(userData));
-        } else {
-          console.log(2);
-          const sessionId = await createSessionId();
+          if (!sessionId) {
+            sessionId = await createSessionId();
+            if (!sessionId) return; // Exit if we couldn't create a session ID
+          }
 
           const { data: userData } = await moviesApi.get(`/account?session_id=${sessionId}`);
 
           dispatch(setUser(userData));
+        } catch (error) {
+          console.error('Error logging in:', error);
         }
       }
     };
 
     logInUser();
-  }, [token]);
+  }, [token, sessionIdFromLocalStorage, dispatch]);
 
   return (
     <>
