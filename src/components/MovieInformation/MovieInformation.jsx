@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Modal, // Changed from Model to Modal
+  Modal,
   Typography,
   Button,
   ButtonGroup,
@@ -9,8 +9,6 @@ import {
   CircularProgress,
   useMediaQuery,
   Rating,
-  Backdrop,
-  Fade,
 } from '@mui/material';
 import {
   Movie as MovieIcon,
@@ -21,7 +19,6 @@ import {
   FavoriteBorderOutlined,
   Remove,
   ArrowBack,
-  BorderColor,
 } from '@mui/icons-material';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,7 +33,6 @@ import { userSelector } from '../../features/auth';
 
 const MovieInformation = () => {
   const { user } = useSelector(userSelector);
-  console.log('Movie Information');
   const { id } = useParams();
   const classes = useStyle();
   const dispatch = useDispatch();
@@ -93,12 +89,12 @@ const MovieInformation = () => {
     );
     setIsMovieWatchlisted((prev) => !prev);
   };
+
   const numberOfMovies = 12;
 
-  console.log(recommendations);
   if (isFetching) {
     return (
-      <Box dispaly="flex" justifyContent="center" alignItems="center">
+      <Box display="flex" justifyContent="center" alignItems="center">
         <CircularProgress size="8rem" />
       </Box>
     );
@@ -106,15 +102,14 @@ const MovieInformation = () => {
 
   if (error) {
     return (
-      <Box dispaly="flex" justifyContent="center" alignItems="center">
-        <Link to="/"> Something has gone wrong - Go Back</Link>
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <Link to="/">Something has gone wrong - Go Back</Link>
       </Box>
     );
   }
 
-  console.log(data);
   return (
-    <Grid id container className={classes.containerSpaceAround}>
+    <Grid container className={classes.containerSpaceAround}>
       <Grid item sm={12} lg={4} style={{ display: 'flex', marginBottom: '30px' }}>
         <img
           className={classes.poster}
@@ -130,15 +125,15 @@ const MovieInformation = () => {
           {data?.tagline}
         </Typography>
         <Grid item className={classes.containerSpaceAround}>
-          <Box display="flex" align="center">
+          <Box display="flex" alignItems="center">
             <Rating readOnly value={data?.vote_average / 2} />
             <Typography variant="subtitle1" gutterBottom style={{ marginLeft: '10px' }}>
               {data?.vote_average?.toFixed(1)}/10
             </Typography>
           </Box>
           <Typography variant="h6" align="center" gutterBottom>
-            {data?.runtime} min /{' '}
-            {data?.spoken_languages.length > 0 ? `/${data?.spoken_languages[0].name}` : ''}
+            {data?.runtime} min{' '}
+            {data?.spoken_languages.length > 0 ? `/ ${data?.spoken_languages[0].name}` : ''}
           </Typography>
         </Grid>
         <Grid item className={classes.genreContainer}>
@@ -198,7 +193,7 @@ const MovieInformation = () => {
         <Grid item container style={{ marginTop: '2em' }}>
           <div className={classes.buttonsContainer}>
             <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
-              <ButtonGroup size="small" varient="outlined">
+              <ButtonGroup size="small" variant="outlined">
                 <Button
                   target="_blank"
                   rel="noopener noreferrer"
@@ -221,7 +216,7 @@ const MovieInformation = () => {
               </ButtonGroup>
             </Grid>
             <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
-              <ButtonGroup size="medium" varient="outlined">
+              <ButtonGroup size="medium" variant="outlined">
                 <Button
                   onClick={addToFavorite}
                   endIcon={isMovieFavorited ? <FavoriteBorderOutlined /> : <Favorite />}
@@ -255,7 +250,7 @@ const MovieInformation = () => {
           <Box>Sorry, nothing was found.</Box>
         )}
       </Box>
-      {console.log('============== data ==================> ', data)}
+
       <Modal
         open={open}
         onClose={() => setOpen(false)}
