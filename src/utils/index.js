@@ -15,7 +15,8 @@ export const fetchToken = async () => {
     if (data.success) {
       localStorage.setItem('request_token', token);
 
-      window.location.href = `http://www.themoviedb.org/authenticate/${token}?redirect_to=${window.location.origin}/approved`;
+      const redirectTo = `${window.location.origin}/approved`;
+      window.location.href = `https://www.themoviedb.org/authenticate/${token}?redirect_to=${redirectTo}`;
     }
   } catch (error) {
     console.log('Sorry, your token could not be created.');

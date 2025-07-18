@@ -41,8 +41,14 @@ export const tmdbApi = createApi({
 
     //* Get User Specific Lists
     getList: builder.query({
-      query: ({ listName, accountId, sessionId, page }) =>
-        `account/${accountId}/${listName}?api_key=${tmdbApiKey}&session_id=${sessionId}&page=${page}`,
+      query: ({ listName, accountId, sessionId, page }) => {
+        const storedSessionId = sessionId || localStorage.getItem('session_id');
+        const storedAccountId = accountId || localStorage.getItem('account');
+
+        if (!storedSessionId || !storedAccountId) return null;
+
+        return `account/${storedAccountId}/${listName}?api_key=${tmdbApiKey}&session_id=${storedSessionId}&page=${page}`;
+      },
     }),
     getRecommendations: builder.query({
       query: ({ movie_id, list }) => `/movie/${movie_id}/${list}?api_key=${tmdbApiKey}`,

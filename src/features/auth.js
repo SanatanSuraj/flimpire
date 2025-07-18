@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   user: {},
-  isAuthenticated: false,
-  sessionId: '',
+  isAuthenticated: Boolean(localStorage.getItem('session_id')),
+  sessionId: localStorage.getItem('session_id') || '',
 };
 
 const authSlice = createSlice({
